@@ -1,5 +1,20 @@
 <resources>
-    <string name="app_name">CookApp</string>
-    <string name="tab_text_1">Tab 1</string>
-    <string name="tab_text_2">Tab 2</string>
+    <string name="app_name">Accucook</string>
+    <string name="tab_text_1">Add New Attempt</string>
+    <string name="tab_text_2">List of Attempts</string>
+    <string name="tab_text_3">Alarm</string>
+    <string name="form_name_fill">Name of food:</string>
+    <string name="form_type_fill">Type of preparing:</string>
+    <string name="form_device_fill">Device used:</string>
+    <string name="form_minutes_fill">Minutes:</string>
+    <string name="form_title">Adding formula</string>
+    <string name="form_rating_fill">Rating:</string>
+
+    <string name="button_clear">Clear</string>
+    <string name="button_submit">Submit</string>
+    <string name="hint_text">normal text</string>
+    <string name="hint_number">number</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
