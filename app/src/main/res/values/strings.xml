@@ -4,17 +4,23 @@
     <string name="tab_text_2">List of Attempts</string>
     <string name="tab_text_3">Alarm</string>
     <string name="form_name_fill">Name of food:</string>
-    <string name="form_type_fill">Type of preparing:</string>
+    <string name="form_type_fill">Cookware:</string>
     <string name="form_device_fill">Device used:</string>
     <string name="form_minutes_fill">Minutes:</string>
     <string name="form_title">Adding formula</string>
     <string name="form_rating_fill">Rating:</string>
+    <string name="form_power_fill">Power level:</string>
 
     <string name="button_clear">Clear</string>
     <string name="button_submit">Submit</string>
     <string name="hint_text">normal text</string>
     <string name="hint_number">number</string>
 
+
+    <string name="simple_clock_title">Clock</string>
+    <string name="dish_clock_title">DishClock</string>
+
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="title_activity_alarm_tabs">AlarmTabsActivity</string>
 </resources>

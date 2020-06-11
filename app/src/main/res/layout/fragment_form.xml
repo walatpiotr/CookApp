@@ -43,7 +43,7 @@ tools:context=".FormFragment">
             app:layout_constraintTop_toTopOf="parent">
 
             <LinearLayout
-                android:id="@+id/fill01"
+                android:id="@+id/name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
@@ -54,18 +54,15 @@ tools:context=".FormFragment">
                     android:layout_height="wrap_content"
                     android:text="@string/form_name_fill" />
 
-                <EditText
-                    android:id="@+id/editText"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:ems="10"
-                    android:hint="@string/hint_text"
-                    android:inputType="textPersonName" />
+                <AutoCompleteTextView
+                    android:id="@+id/autoCompleteTextView"
+                    android:layout_width="212dp"
+                    android:layout_height="wrap_content" />
 
             </LinearLayout>
 
             <LinearLayout
-                android:id="@+id/fill02"
+                android:id="@+id/type"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
@@ -76,17 +73,15 @@ tools:context=".FormFragment">
                     android:layout_height="wrap_content"
                     android:text="@string/form_type_fill" />
 
-                <EditText
-                    android:id="@+id/editText2"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:ems="10"
-                    android:hint="@string/hint_text"
-                    android:inputType="textPersonName" />
+                <AutoCompleteTextView
+                    android:id="@+id/autoCompleteTextView2"
+                    android:layout_width="211dp"
+                    android:layout_height="wrap_content" />
+
             </LinearLayout>
 
             <LinearLayout
-                android:id="@+id/fill03"
+                android:id="@+id/device"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
@@ -97,17 +92,38 @@ tools:context=".FormFragment">
                     android:layout_height="wrap_content"
                     android:text="@string/form_device_fill" />
 
-                <EditText
-                    android:id="@+id/editText4"
+                <AutoCompleteTextView
+                    android:id="@+id/autoCompleteTextView3"
+                    android:layout_width="213dp"
+                    android:layout_height="wrap_content" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/power"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/textView6"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/form_power_fill" />
+
+                <EditText
+                    android:id="@+id/editText5"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
                     android:ems="10"
                     android:hint="@string/hint_text"
                     android:inputType="textPersonName" />
             </LinearLayout>
 
             <LinearLayout
-                android:id="@+id/fill04"
+                android:id="@+id/minutes"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
@@ -129,7 +145,7 @@ tools:context=".FormFragment">
             </LinearLayout>
 
             <LinearLayout
-                android:id="@+id/fill05"
+                android:id="@+id/rating"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
@@ -152,26 +168,59 @@ tools:context=".FormFragment">
 
             </LinearLayout>
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
-                <Button
-                    android:id="@+id/button"
-                    android:layout_width="148dp"
-                    android:layout_height="wrap_content"
-                    android:text="@string/button_clear" />
-
-                <Button
-                    android:id="@+id/button2"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="@string/button_submit" />
-            </LinearLayout>
-
         </LinearLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="344dp"
+            android:layout_height="57dp"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="63dp"
+            android:layout_marginEnd="32dp"
+            android:layout_marginBottom="64dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/linearLayout">
+
+            <Button
+                android:id="@+id/clear_button"
+                android:layout_width="141dp"
+                android:layout_height="54dp"
+
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="85dp"
+                android:background="@drawable/button_background"
+                android:shadowColor="#4D11A8"
+                android:shadowDx="0"
+                android:shadowDy="0"
+                android:shadowRadius="5"
+                android:text="@string/button_clear"
+                android:textColor="#FFFFFF"
+                android:textSize="16sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/submit_button"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <Button
+                android:id="@+id/submit_button"
+                android:layout_width="134dp"
+                android:layout_height="57dp"
+                android:layout_weight="1"
+                android:background="@drawable/button_background"
+                android:shadowColor="#4D11A8"
+                android:shadowDx="0"
+                android:shadowDy="0"
+                android:shadowRadius="5"
+                android:text="@string/button_submit"
+                android:textColor="#FFFFFF"
+                android:textSize="16sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </FrameLayout>

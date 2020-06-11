@@ -1,4 +1,4 @@
-package com.example.cookapp.ui.main;
+package com.example.cookapp.alarm;
 
 import android.content.Context;
 
@@ -8,21 +8,21 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 
-import com.example.cookapp.AlarmFragment;
-import com.example.cookapp.FormFragment;
+import com.example.cookapp.ClockAlarmFragment;
+import com.example.cookapp.ClockSimpleFragment;
 import com.example.cookapp.R;
 
 /**
  * A [FragmentPagerAdapter] that returns a fragment corresponding to
  * one of the sections/tabs/pages.
  */
-public class SectionsPagerAdapter extends FragmentPagerAdapter {
+public class AlarmsPagerAdapter extends FragmentPagerAdapter {
 
     @StringRes
-    private static final int[] TAB_TITLES = new int[]{R.string.tab_text_1, R.string.tab_text_2, R.string.tab_text_3};
+    private static final int[] TAB_TITLES = new int[]{R.string.simple_clock_title, R.string.dish_clock_title};
     private final Context mContext;
 
-    public SectionsPagerAdapter(Context context, FragmentManager fm) {
+    public AlarmsPagerAdapter(Context context, FragmentManager fm) {
         super(fm);
         mContext = context;
     }
@@ -32,14 +32,12 @@ public class SectionsPagerAdapter extends FragmentPagerAdapter {
         Fragment fragment = null;
         switch(position){
             case 0:
-                fragment = new FormFragment();
+                fragment = new ClockSimpleFragment();
                 break;
             case 1:
-                fragment = new FormFragment();
+                fragment = new ClockAlarmFragment();
                 break;
-            case 2:
-                fragment = new AlarmFragment();
-                break;
+
         }
         return fragment;
     }
@@ -52,7 +50,7 @@ public class SectionsPagerAdapter extends FragmentPagerAdapter {
 
     @Override
     public int getCount() {
-        // Show 3 total pages.
-        return 3;
+        // Show 2 total pages.
+        return 2;
     }
 }
