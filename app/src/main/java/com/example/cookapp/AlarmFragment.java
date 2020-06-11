@@ -1,83 +1,114 @@
 package com.example.cookapp;
 
-import android.content.Intent;
+import android.content.Context;
 import android.os.Bundle;
 
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.cookapp.alarm.AlarmsPagerAdapter;
-import com.example.cookapp.ui.main.SectionsPagerAdapter;
 import com.google.android.material.tabs.TabLayout;
 
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link AlarmFragment#newInstance} factory method to
+ * Use the {@link AlarmFragment# newInstance} factory method to
  * create an instance of this fragment.
  */
 public class AlarmFragment extends Fragment {
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
+    public static TabLayout tabLayout;
+    public static ViewPager viewPager;
+    public static int int_items = 2;
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
-
-    public AlarmFragment() {
-        // Required empty public constructor
-    }
-
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment AlarmFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static AlarmFragment newInstance(String param1, String param2) {
-        AlarmFragment fragment = new AlarmFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
-
+    @Nullable
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        /**
+         *Inflate tab_layout and setup Views.
+         */
+        View v = inflater.inflate(R.layout.fragment_alarm, container, false);
+        tabLayout = (TabLayout) v.findViewById(R.id.tabLayout);
+        viewPager = (ViewPager) v.findViewById(R.id.viewpager);
+
+        /**
+         *Set an Apater for the View Pager
+         */
+        viewPager.setAdapter(new AlarmsPagerAdapter(getChildFragmentManager()));
+
+        /**
+         * Now , this is a workaround ,
+         * The setupWithViewPager dose't works without the runnable .
+         * Maybe a Support Library Bug .
+         */
+
+        tabLayout.post(new Runnable() {
+            @Override
+            public void run() {
+                tabLayout.setupWithViewPager(viewPager);
+            }
+        });
+
+        return v;
+
+    }
+
+    class AlarmsPagerAdapter extends FragmentPagerAdapter {
+
+        private final int[] TAB_TITLES = new int[]{R.string.simple_clock_title, R.string.dish_clock_title};
+
+        public AlarmsPagerAdapter( FragmentManager fm) {
+            super(fm);
+
         }
-        /*Intent intent = new Intent(this, AlarmTabsActivity.class);
-        startActivity(intent);*/
+
+        /**
+         * Return fragment with respect to Position .
+         */
+
+        @Override
+        public Fragment getItem(int position) {
+            Fragment fragment = null;
+            switch(position){
+                case 0:
+                    fragment = new ClockSimpleFragment();
+                    break;
+                case 1:
+                    fragment = new ClockAlarmFragment();
+                    break;
+
+            }
+            return fragment;
+        }
+
+        @Override
+        public int getCount() {
+
+            return int_items;
+
+        }
+
+        /**
+         * This method returns the title of the tab according to the position.
+         */
+
+        @Override
+        public CharSequence getPageTitle(int position) {
 
 
-    }
+            CharSequence title = null;
+            if (position == 0) {
+                title = getString(TAB_TITLES[0]);
+            } else if (position == 1) {
+                title = getString(TAB_TITLES[1]);
 
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-
-        /*View rootView = inflater.inflate(R.layout.fragment_alarm, container, false);
-        AlarmsPagerAdapter alarmsPagerAdapter = new AlarmsPagerAdapter(getContext(), getFragmentManager());
-        ViewPager viewPager = (ViewPager) rootView.findViewById(R.id.view_pager);
-        viewPager.setAdapter(alarmsPagerAdapter);
-        TabLayout tabs = (TabLayout) rootView.findViewById(R.id.tabLayout);
-        tabs.setupWithViewPager(viewPager);*/
-        return inflater.inflate(R.layout.fragment_alarm, container, false);
-
+            }
+            return title;
+        }
     }
 }

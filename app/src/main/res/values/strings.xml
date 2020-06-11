@@ -18,7 +18,10 @@
 
 
     <string name="simple_clock_title">Clock</string>
-    <string name="dish_clock_title">DishClock</string>
+    <string name="dish_clock_title">Dish Clock</string>
+
+    <string name="clock_sumbit_button">Submit time</string>
+    <string name="hint_clock">insert time in form - 12:34</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
