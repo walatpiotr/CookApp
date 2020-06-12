@@ -1,5 +1,7 @@
 package com.example.cookapp;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -12,6 +14,7 @@ import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 
 /**
@@ -27,6 +30,9 @@ public class ClockAlarmFragment extends Fragment {
     public TextView clock_text;
     public CountDownTimer timer;
     public ImageButton reset_time_button;
+    boolean running;
+    AutoCompleteTextView time_text_getter;
+    View view;
 
     // TODO: Rename and change types of parameters
     private String mParam1;
@@ -67,9 +73,9 @@ public class ClockAlarmFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_clock_alarm, container, false);
+        view = inflater.inflate(R.layout.fragment_clock_alarm, container, false);
 
-        final AutoCompleteTextView time_text_getter = (AutoCompleteTextView) view.findViewById(R.id.autoCompleteTextView4);
+        time_text_getter = (AutoCompleteTextView) view.findViewById(R.id.autoCompleteTextView4);
         Button submit_time_button = (Button) view.findViewById(R.id.submit_time_button);
 
         clock_text = (TextView) view.findViewById(R.id.clock);
@@ -79,9 +85,9 @@ public class ClockAlarmFragment extends Fragment {
         submit_time_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                System.out.println("dupaaaa");
-                if(time_text_getter.getText().toString().matches("\\d{2}:\\d{2}")) {
-                    timer.cancel();
+
+                if(time_text_getter.getText().toString().matches("\\d{2}:\\d{2}") && !running) {
+
                     String not_formatted_time = time_text_getter.getText().toString();
 
                     final long mili = (Long.parseLong(not_formatted_time.substring(0, 2)) * 60 + Long.parseLong(not_formatted_time.substring(3, 5)))*1000;
@@ -92,13 +98,22 @@ public class ClockAlarmFragment extends Fragment {
 
                             //String dupa = Long.toString(mili);
                             clock_text.setText(current_time);
+                            running = true;
+                            time_text_getter.setText("");
                         }
 
                         @Override
                         public void onFinish() {
-
+                            showAlertDialog(view);
+                            running = false;
+                            clock_text.setText("00:00");
+                            time_text_getter.setText("");
                         }
                     }.start();
+                    if(time_text_getter.getText().toString().matches("\\d{2}:\\d{2}") && running){
+
+                    }
+
                 }
             }
         });
@@ -108,10 +123,24 @@ public class ClockAlarmFragment extends Fragment {
                 timer.cancel();
                 clock_text.setText("00:00");
                 time_text_getter.setText("");
+                running = false;
             }
         });
 
 
         return view;
+    }
+
+    public void showAlertDialog(View view){
+        AlertDialog.Builder alert = new AlertDialog.Builder(getContext());
+            alert.setTitle("Your dish is finished");
+            alert.setMessage("Your dish is finished");
+            alert.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                  Toast.makeText(getContext(), "Bon appetit!", Toast.LENGTH_SHORT).show();
+                }
+            });
+            alert.create().show();
     }
 }
