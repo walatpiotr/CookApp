@@ -1,5 +1,6 @@
 package com.example.cookapp;
 
+import android.content.Context;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -10,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.RatingBar;
 
 
 /**
@@ -30,9 +32,11 @@ public class FormFragment extends Fragment {
     AutoCompleteTextView autoDevice;
     EditText power;
     EditText minutes;
+    RatingBar ratingBar;
 
     Button clear;
     Button submit;
+
 
     // TODO: Rename and change types of parameters
     private String mParam1;
@@ -72,6 +76,7 @@ public class FormFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_form, container, false);
         autoName = (AutoCompleteTextView) view.findViewById(R.id.autoCompleteTextView);
@@ -79,24 +84,107 @@ public class FormFragment extends Fragment {
         autoDevice = (AutoCompleteTextView) view.findViewById(R.id.autoCompleteTextView3);
         power = (EditText) view.findViewById(R.id.editText_power);
         minutes = (EditText) view.findViewById(R.id.editText3);
-
+        ratingBar = (RatingBar) view.findViewById(R.id.ratingBar);
         clear = (Button) view.findViewById(R.id.clear_button);
         submit = (Button) view.findViewById(R.id.submit_button);
 
+        //changing color of hint text in two segments
+        power.setHintTextColor(getResources().getColor(R.color.colorPrimary));
+        minutes.setHintTextColor(getResources().getColor(R.color.colorPrimary));
+
+        //reaction to clear button
         clear.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
                 autoName.setText("");
+                autoName.setHint("");
                 autoCookware.setText("");
+                autoCookware.setHint("");
                 autoDevice.setText("");
+                autoDevice.setHint("");
                 power.setText("");
+                power.setHint(getResources().getString(R.string.hint_text));
+                power.setHintTextColor(getResources().getColor(R.color.colorPrimary));
                 minutes.setText("");
-                
-
-
-
+                minutes.setHint(getResources().getString(R.string.hint_clock));
+                minutes.setHintTextColor(getResources().getColor(R.color.colorPrimary));
+                ratingBar.setRating((float) 2.5);
             }// end onClick
+        });
+
+        //reaction to submit button
+        submit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view){
+                String name_string;
+                String cookware_string;
+                String device_string;
+                String power_string;
+                String minutes_string;
+                float rating_value;
+
+
+
+                if(
+                        !autoName.getText().toString().equals("") &&
+                        !autoCookware.getText().toString().equals("") &&
+                        !autoDevice.getText().toString().equals("") &&
+                        !power.getText().toString().equals("") &&
+                        !minutes.getText().toString().equals(""))
+                {
+                    if(!minutes.getText().toString().matches("\\d{2}:\\d{2}")) {
+                        minutes.setText("");
+                        minutes.setHint(getResources().getString(R.string.hint_clock));
+                        minutes.setHintTextColor(getResources().getColor(R.color.error_red));
+                    }
+                    else {
+                        name_string = autoName.getText().toString();
+                        cookware_string = autoCookware.getText().toString();
+                        device_string = autoDevice.getText().toString();
+                        power_string = power.getText().toString();
+                        minutes_string = minutes.getText().toString();
+                        rating_value = (float) ratingBar.getRating();
+
+                        //database adding values !!!
+
+                        //DatabaseHelper db = new DatabaseHelper(getContext());
+                        //db.addRecord(name_string, cookware_string, device_string, power_string, minutes_string, rating_value);
+                    }
+                }
+
+                else
+                {
+                    if(autoName.getText().toString().equals("")){
+                        autoName.setHint(getResources().getString(R.string.error_hint_name));
+                        autoName.setHintTextColor(getResources().getColor(R.color.error_red));
+                    }
+                    if(autoCookware.getText().toString().equals("")){
+                        autoCookware.setHint(getResources().getString(R.string.error_hint_cookware));
+                        autoCookware.setHintTextColor(getResources().getColor(R.color.error_red));
+                    }
+                    if(autoDevice.getText().toString().equals("")){
+                        autoDevice.setHint(getResources().getString(R.string.error_hint_device));
+                        autoDevice.setHintTextColor(getResources().getColor(R.color.error_red));
+                    }
+                    if(power.getText().toString().equals("")){
+                        power.setHint(getResources().getString(R.string.error_hint_power));
+                        power.setHintTextColor(getResources().getColor(R.color.error_red));
+                    }
+                    if(minutes.getText().toString().equals("")){
+                        minutes.setHint(getResources().getString(R.string.error_hint_minutes));
+                        minutes.setHintTextColor(getResources().getColor(R.color.error_red));
+                    }
+                    if(!minutes.getText().toString().matches("\\d{2}:\\d{2}")) {
+                        minutes.setText("");
+                        minutes.setHint(getResources().getString(R.string.hint_clock));
+                        minutes.setHintTextColor(getResources().getColor(R.color.error_red));
+                    }
+                }
+
+
+
+            }
         });
 
         return view;

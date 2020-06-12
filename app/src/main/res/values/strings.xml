@@ -26,4 +26,13 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="title_activity_alarm_tabs">AlarmTabsActivity</string>
+
+
+    <string name="error_hint_name">Don\'t forget name!</string>
+    <string name="error_hint_cookware">Don\'t forget cookware!</string>
+    <string name="error_hint_device">Don\'t forget device!</string>
+    <string name="error_hint_power">Don\'t forget power!</string>
+    <string name="error_hint_minutes">Don\'t forget the time!</string>
+
+
 </resources>

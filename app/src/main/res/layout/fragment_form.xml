@@ -139,8 +139,8 @@ tools:context=".FormFragment">
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:ems="10"
-                    android:hint="@string/hint_number"
-                    android:inputType="number" />
+                    android:hint="@string/hint_clock"
+                    android:inputType="textPersonName|time" />
 
             </LinearLayout>
 
