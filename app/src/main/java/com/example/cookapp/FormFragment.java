@@ -150,6 +150,20 @@ public class FormFragment extends Fragment {
 
                         //DatabaseHelper db = new DatabaseHelper(getContext());
                         //db.addRecord(name_string, cookware_string, device_string, power_string, minutes_string, rating_value);
+
+                        autoName.setText("");
+                        autoName.setHint("");
+                        autoCookware.setText("");
+                        autoCookware.setHint("");
+                        autoDevice.setText("");
+                        autoDevice.setHint("");
+                        power.setText("");
+                        power.setHint(getResources().getString(R.string.hint_text));
+                        power.setHintTextColor(getResources().getColor(R.color.colorPrimary));
+                        minutes.setText("");
+                        minutes.setHint(getResources().getString(R.string.hint_clock));
+                        minutes.setHintTextColor(getResources().getColor(R.color.colorPrimary));
+                        ratingBar.setRating((float) 2.5);
                     }
                 }
 

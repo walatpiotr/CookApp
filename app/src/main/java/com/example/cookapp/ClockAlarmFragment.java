@@ -81,6 +81,7 @@ public class ClockAlarmFragment extends Fragment {
             public void onClick(View v) {
                 System.out.println("dupaaaa");
                 if(time_text_getter.getText().toString().matches("\\d{2}:\\d{2}")) {
+                    timer.cancel();
                     String not_formatted_time = time_text_getter.getText().toString();
 
                     final long mili = (Long.parseLong(not_formatted_time.substring(0, 2)) * 60 + Long.parseLong(not_formatted_time.substring(3, 5)))*1000;
@@ -89,7 +90,7 @@ public class ClockAlarmFragment extends Fragment {
                         public void onTick(long millisUntilFinished) {
                             String current_time =  Long.toString(millisUntilFinished / 60000) + ":" + Long.toString((millisUntilFinished-((millisUntilFinished / 60000)*60000)) / 1000);
 
-                            String dupa = Long.toString(mili);
+                            //String dupa = Long.toString(mili);
                             clock_text.setText(current_time);
                         }
 
@@ -106,6 +107,7 @@ public class ClockAlarmFragment extends Fragment {
             public void onClick(View v) {
                 timer.cancel();
                 clock_text.setText("00:00");
+                time_text_getter.setText("");
             }
         });
 
