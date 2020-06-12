@@ -4,9 +4,14 @@ import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
+import android.os.CountDownTimer;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AutoCompleteTextView;
+import android.widget.Button;
+import android.widget.ImageButton;
+import android.widget.TextView;
 
 
 /**
@@ -19,6 +24,9 @@ public class ClockAlarmFragment extends Fragment {
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
+    public TextView clock_text;
+    public CountDownTimer timer;
+    public ImageButton reset_time_button;
 
     // TODO: Rename and change types of parameters
     private String mParam1;
@@ -59,6 +67,49 @@ public class ClockAlarmFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_clock_alarm, container, false);
+        View view = inflater.inflate(R.layout.fragment_clock_alarm, container, false);
+
+        final AutoCompleteTextView time_text_getter = (AutoCompleteTextView) view.findViewById(R.id.autoCompleteTextView4);
+        Button submit_time_button = (Button) view.findViewById(R.id.submit_time_button);
+
+        clock_text = (TextView) view.findViewById(R.id.clock);
+
+        reset_time_button = (ImageButton) view.findViewById(R.id.stop_button);
+
+        submit_time_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                System.out.println("dupaaaa");
+                if(time_text_getter.getText().toString().matches("\\d{2}:\\d{2}")) {
+                    String not_formatted_time = time_text_getter.getText().toString();
+
+                    final long mili = (Long.parseLong(not_formatted_time.substring(0, 2)) * 60 + Long.parseLong(not_formatted_time.substring(3, 5)))*1000;
+                    timer = new CountDownTimer(mili, 1000) {
+                        @Override
+                        public void onTick(long millisUntilFinished) {
+                            String current_time =  Long.toString(millisUntilFinished / 60000) + ":" + Long.toString((millisUntilFinished-((millisUntilFinished / 60000)*60000)) / 1000);
+
+                            String dupa = Long.toString(mili);
+                            clock_text.setText(current_time);
+                        }
+
+                        @Override
+                        public void onFinish() {
+
+                        }
+                    }.start();
+                }
+            }
+        });
+        reset_time_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                timer.cancel();
+                clock_text.setText("00:00");
+            }
+        });
+
+
+        return view;
     }
 }
