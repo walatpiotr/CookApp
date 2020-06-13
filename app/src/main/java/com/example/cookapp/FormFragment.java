@@ -225,7 +225,31 @@ public class FormFragment extends Fragment {
         public void onReceive(Context context, Intent intent) {
             if (intent.getAction().equals(ACTION_NEW_MSG)) {
                 String message = intent.getStringExtra(MSG_FIELD);
-                minutes.setText(message);
+                if(message!=null){
+                    long value = Long.parseLong(message);
+                    String beforetime;
+                    String aftertime;
+                    if(value/60000 < 10){
+                        beforetime =  "0"+Long.toString(value / 60000);
+                        if( ((value-((value / 60000)*60000)) / 1000)<10){
+                            aftertime = "0"+ Long.toString((value-((value / 60000)*60000)) / 1000);
+                        }
+                        else{
+                            aftertime = Long.toString((value-((value / 60000)*60000)) / 1000);
+                        }
+                    }
+                    else{
+                        beforetime =  Long.toString(value / 60000);
+                        if( ((value-((value / 60000)*60000)) / 1000)<10){
+                            aftertime = "0"+ Long.toString((value-((value / 60000)*60000)) / 1000);
+                        }
+                        else{
+                            aftertime = Long.toString((value-((value / 60000)*60000)) / 1000);
+                        }
+                    }
+                    String current_time =  beforetime + ":" + aftertime;
+                    minutes.setText(current_time);
+                }
             }
         }
 
