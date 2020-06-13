@@ -87,31 +87,58 @@ public class ClockAlarmFragment extends Fragment {
             public void onClick(View v) {
 
                 if(time_text_getter.getText().toString().matches("\\d{2}:\\d{2}") && !running) {
+                    String pattern = time_text_getter.getText().toString();
+                    if(Integer.parseInt(pattern.substring(3))>59){
+                        time_text_getter.setText("");
+                        time_text_getter.setHint("Type real time");
+                        time_text_getter.setHintTextColor(getResources().getColor(R.color.error_red));
+                    }
+                    else {
+                        String not_formatted_time = time_text_getter.getText().toString();
+                        time_text_getter.setHint("");
+                        final long mili = (Long.parseLong(not_formatted_time.substring(0, 2)) * 60 + Long.parseLong(not_formatted_time.substring(3, 5))) * 1000;
+                        timer = new CountDownTimer(mili, 1000) {
+                            @Override
+                            public void onTick(long value) {
+                                //String current_time = Long.toString(millisUntilFinished / 60000) + ":" + Long.toString((millisUntilFinished - ((millisUntilFinished / 60000) * 60000)) / 1000);
+                                //String dupa = Long.toString(mili);
 
-                    String not_formatted_time = time_text_getter.getText().toString();
+                                String beforetime;
+                                String aftertime;
+                                if(value/60000 < 10){
+                                    beforetime =  "0"+Long.toString(value / 60000);
+                                    if( ((value-((value / 60000)*60000)) / 1000)<10){
+                                        aftertime = "0"+ Long.toString((value-((value / 60000)*60000)) / 1000);
+                                    }
+                                    else{
+                                        aftertime = Long.toString((value-((value / 60000)*60000)) / 1000);
+                                    }
+                                }
+                                else{
+                                    beforetime =  Long.toString(value / 60000);
+                                    if( ((value-((value / 60000)*60000)) / 1000)<10){
+                                        aftertime = "0"+ Long.toString((value-((value / 60000)*60000)) / 1000);
+                                    }
+                                    else{
+                                        aftertime = Long.toString((value-((value / 60000)*60000)) / 1000);
+                                    }
+                                }
+                                String current_time =  beforetime + ":" + aftertime;
+                                clock_text.setText(current_time);
+                                running = true;
+                                time_text_getter.setText("");
+                            }
 
-                    final long mili = (Long.parseLong(not_formatted_time.substring(0, 2)) * 60 + Long.parseLong(not_formatted_time.substring(3, 5)))*1000;
-                    timer = new CountDownTimer(mili, 1000) {
-                        @Override
-                        public void onTick(long millisUntilFinished) {
-                            String current_time =  Long.toString(millisUntilFinished / 60000) + ":" + Long.toString((millisUntilFinished-((millisUntilFinished / 60000)*60000)) / 1000);
+                            @Override
+                            public void onFinish() {
+                                showAlertDialog(view);
+                                running = false;
+                                clock_text.setText("00:00");
+                                time_text_getter.setText("");
+                                time_text_getter.setHint("");
+                            }
 
-                            //String dupa = Long.toString(mili);
-                            clock_text.setText(current_time);
-                            running = true;
-                            time_text_getter.setText("");
-                        }
-
-                        @Override
-                        public void onFinish() {
-                            showAlertDialog(view);
-                            running = false;
-                            clock_text.setText("00:00");
-                            time_text_getter.setText("");
-                        }
-                    }.start();
-                    if(time_text_getter.getText().toString().matches("\\d{2}:\\d{2}") && running){
-
+                        }.start();
                     }
 
                 }
