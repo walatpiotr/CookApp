@@ -30,23 +30,16 @@ public class FormFragment extends Fragment {
 
 
 
-    AutoCompleteTextView autoName ;
-    AutoCompleteTextView autoCookware ;
-    AutoCompleteTextView autoDevice;
-    EditText power;
-    EditText minutes;
-    RatingBar ratingBar;
+    private AutoCompleteTextView autoName ;
+    private AutoCompleteTextView autoCookware ;
+    private AutoCompleteTextView autoDevice;
+    private EditText power;
+    private EditText minutes;
+    private RatingBar ratingBar;
 
-    Button clear;
-    Button submit;
-
-    public static final String ACTION_NEW_MSG = "pl.froger.hello.broadcastreceiver.NEW_MSG";
-    public static final String MSG_FIELD = "message";
+    private static final String ACTION_NEW_MSG = "pl.froger.hello.broadcastreceiver.NEW_MSG";
+    private static final String MSG_FIELD = "message";
     private MyReceiver myReceiver;
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
 
     public FormFragment() {
         // Required empty public constructor
@@ -61,7 +54,7 @@ public class FormFragment extends Fragment {
      * @return A new instance of fragment FormFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static FormFragment newInstance(String param1, String param2) {
+    private static FormFragment newInstance(String param1, String param2) {
         FormFragment fragment = new FormFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
@@ -74,8 +67,9 @@ public class FormFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
+            // TODO: Rename and change types of parameters
+            String mParam1 = getArguments().getString(ARG_PARAM1);
+            String mParam2 = getArguments().getString(ARG_PARAM2);
         }
         initReceiver();
     }
@@ -86,14 +80,14 @@ public class FormFragment extends Fragment {
 
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_form, container, false);
-        autoName = (AutoCompleteTextView) view.findViewById(R.id.autoCompleteTextView);
-        autoCookware = (AutoCompleteTextView) view.findViewById(R.id.autoCompleteTextView2);
-        autoDevice = (AutoCompleteTextView) view.findViewById(R.id.autoCompleteTextView3);
-        power = (EditText) view.findViewById(R.id.editText_power);
-        minutes = (EditText) view.findViewById(R.id.editText3);
-        ratingBar = (RatingBar) view.findViewById(R.id.ratingBar);
-        clear = (Button) view.findViewById(R.id.clear_button);
-        submit = (Button) view.findViewById(R.id.submit_button);
+        autoName = view.findViewById(R.id.autoCompleteTextView);
+        autoCookware = view.findViewById(R.id.autoCompleteTextView2);
+        autoDevice = view.findViewById(R.id.autoCompleteTextView3);
+        power = view.findViewById(R.id.editText_power);
+        minutes = view.findViewById(R.id.editText3);
+        ratingBar = view.findViewById(R.id.ratingBar);
+        Button clear = view.findViewById(R.id.clear_button);
+        Button submit = view.findViewById(R.id.submit_button);
 
         //changing color of hint text in two segments
         power.setHintTextColor(getResources().getColor(R.color.colorPrimary));
@@ -151,12 +145,12 @@ public class FormFragment extends Fragment {
                         device_string = autoDevice.getText().toString();
                         power_string = power.getText().toString();
                         minutes_string = minutes.getText().toString();
-                        rating_value = (float) ratingBar.getRating();
+                        rating_value = ratingBar.getRating();
 
                         //database adding values !!!
 
-                        //DatabaseHelper db = new DatabaseHelper(getContext());
-                        //db.addRecord(name_string, cookware_string, device_string, power_string, minutes_string, rating_value);
+                        DatabaseHelper db = new DatabaseHelper(getContext());
+                        db.addRecord(name_string, cookware_string, device_string, power_string, minutes_string, rating_value);
 
                         autoName.setText("");
                         autoName.setHint("");
@@ -227,27 +221,27 @@ public class FormFragment extends Fragment {
                 String message = intent.getStringExtra(MSG_FIELD);
                 if(message!=null){
                     long value = Long.parseLong(message);
-                    String beforetime;
-                    String aftertime;
+                    String beforeTime;
+                    String afterTime;
                     if(value/60000 < 10){
-                        beforetime =  "0"+Long.toString(value / 60000);
+                        beforeTime =  "0"+Long.toString(value / 60000);
                         if( ((value-((value / 60000)*60000)) / 1000)<10){
-                            aftertime = "0"+ Long.toString((value-((value / 60000)*60000)) / 1000);
+                            afterTime = "0"+ Long.toString((value-((value / 60000)*60000)) / 1000);
                         }
                         else{
-                            aftertime = Long.toString((value-((value / 60000)*60000)) / 1000);
+                            afterTime = Long.toString((value-((value / 60000)*60000)) / 1000);
                         }
                     }
                     else{
-                        beforetime =  Long.toString(value / 60000);
+                        beforeTime =  Long.toString(value / 60000);
                         if( ((value-((value / 60000)*60000)) / 1000)<10){
-                            aftertime = "0"+ Long.toString((value-((value / 60000)*60000)) / 1000);
+                            afterTime = "0"+ Long.toString((value-((value / 60000)*60000)) / 1000);
                         }
                         else{
-                            aftertime = Long.toString((value-((value / 60000)*60000)) / 1000);
+                            afterTime = Long.toString((value-((value / 60000)*60000)) / 1000);
                         }
                     }
-                    String current_time =  beforetime + ":" + aftertime;
+                    String current_time =  beforeTime + ":" + afterTime;
                     minutes.setText(current_time);
                 }
             }
