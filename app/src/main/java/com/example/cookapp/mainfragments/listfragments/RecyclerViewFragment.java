@@ -1,4 +1,4 @@
-package com.example.cookapp;
+package com.example.cookapp.mainfragments.listfragments;
 
 import android.database.Cursor;
 import android.os.Bundle;
@@ -10,6 +10,11 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import com.example.cookapp.database.DatabaseHelper;
+import com.example.cookapp.recyclerview.MyListAdapter;
+import com.example.cookapp.recyclerview.MyListData;
+import com.example.cookapp.R;
 
 import java.util.ArrayList;
 

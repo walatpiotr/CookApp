@@ -1,6 +1,5 @@
-package com.example.cookapp;
+package com.example.cookapp.mainfragments;
 
-import android.content.Context;
 import android.os.Bundle;
 
 import androidx.annotation.Nullable;
@@ -13,6 +12,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.cookapp.mainfragments.alarmfragments.ClockAlarmFragment;
+import com.example.cookapp.mainfragments.alarmfragments.ClockSimpleFragment;
+import com.example.cookapp.R;
 import com.google.android.material.tabs.TabLayout;
 
 

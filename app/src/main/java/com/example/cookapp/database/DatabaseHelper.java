@@ -1,4 +1,4 @@
-package com.example.cookapp;
+package com.example.cookapp.database;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -63,7 +63,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         cv.put(COLUMN_RATING, 22);
         db.insert(TABLE_NAME, null, cv);
     }
-    void addRecord(String name, String cookware, String device, String power, String minutes, double rating){
+    public void addRecord(String name, String cookware, String device, String power, String minutes, double rating){
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues cv = new ContentValues();
         cv.put(COLUMN_NAME, name);
@@ -76,7 +76,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.insert(TABLE_NAME, null, cv);
     }
 
-    Cursor readAllData(){
+    public Cursor readAllData(){
         String query = "SELECT * FROM " + TABLE_NAME;
         SQLiteDatabase db = this.getReadableDatabase();
 
@@ -87,7 +87,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return cursor;
     }
 
-    Cursor searchData(String text, boolean name, boolean cookware, boolean device){
+    public Cursor searchData(String text, boolean name, boolean cookware, boolean device){
         String query = "";
         if(name && !cookware && !device){
         query = "SELECT * FROM " + TABLE_NAME + " WHERE " + COLUMN_NAME + " LIKE '%" + text + "%'";

@@ -1,4 +1,4 @@
-package com.example.cookapp;
+package com.example.cookapp.mainfragments;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -16,6 +16,9 @@ import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RatingBar;
+
+import com.example.cookapp.database.DatabaseHelper;
+import com.example.cookapp.R;
 
 import java.util.ArrayList;
 

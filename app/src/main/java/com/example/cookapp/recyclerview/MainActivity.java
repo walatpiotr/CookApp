@@ -1,28 +1,17 @@
-package com.example.cookapp;
+package com.example.cookapp.recyclerview;
 
 import android.database.Cursor;
-import android.database.DatabaseUtils;
-import android.content.Context;
 import android.os.Bundle;
-import android.content.BroadcastReceiver;
-import android.content.Intent;
-import android.content.IntentFilter;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
+
+import com.example.cookapp.R;
+import com.example.cookapp.database.DatabaseHelper;
 import com.google.android.material.tabs.TabLayout;
 
 import androidx.viewpager.widget.ViewPager;
 import androidx.appcompat.app.AppCompatActivity;
-import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.view.View;
-import android.widget.Chronometer;
 
 
 import com.example.cookapp.ui.main.SectionsPagerAdapter;
-
-import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
 

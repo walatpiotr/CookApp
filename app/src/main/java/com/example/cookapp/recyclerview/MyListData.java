@@ -1,4 +1,4 @@
-package com.example.cookapp;
+package com.example.cookapp.recyclerview;
 
 public class MyListData {
     private String name;
