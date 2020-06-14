@@ -4,6 +4,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.database.Cursor;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -15,6 +16,8 @@ import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RatingBar;
+
+import java.util.ArrayList;
 
 
 /**
@@ -29,7 +32,7 @@ public class FormFragment extends Fragment {
     private static final String ARG_PARAM2 = "param2";
 
 
-
+    private ArrayList<String> id, name, type, cookware, device, power_db, minutes_db, rating;
     private AutoCompleteTextView autoName ;
     private AutoCompleteTextView autoCookware ;
     private AutoCompleteTextView autoDevice;
@@ -37,8 +40,8 @@ public class FormFragment extends Fragment {
     private EditText minutes;
     private RatingBar ratingBar;
 
-    private static final String ACTION_NEW_MSG = "pl.froger.hello.broadcastreceiver.NEW_MSG";
-    private static final String MSG_FIELD = "message";
+    public static final String ACTION_NEW_MSG = "pl.froger.hello.broadcastreceiver.NEW_MSG";
+    public static final String MSG_FIELD = "message";
     private MyReceiver myReceiver;
 
     public FormFragment() {
@@ -72,6 +75,31 @@ public class FormFragment extends Fragment {
             String mParam2 = getArguments().getString(ARG_PARAM2);
         }
         initReceiver();
+        id = new ArrayList<>();
+        name = new ArrayList<>();
+        type = new ArrayList<>();
+        cookware = new ArrayList<>();
+        device = new ArrayList<>();
+        power_db = new ArrayList<>();
+        minutes_db = new ArrayList<>();
+        rating = new ArrayList<>();
+        storeDataInArrays();
+    }
+
+    private void storeDataInArrays() {
+        DatabaseHelper myDB = new DatabaseHelper(getContext());
+        Cursor cursor = myDB.readAllData();
+
+        while (cursor.moveToNext()){
+            id.add(cursor.getString(0));
+            name.add(cursor.getString(1));
+            type.add(cursor.getString(2));
+            cookware.add(cursor.getString(3));
+            device.add(cursor.getString(4));
+            power_db.add(cursor.getString(5));
+            minutes_db.add(cursor.getString(6));
+            rating.add(cursor.getString(7));
+        }
     }
 
     @Override
