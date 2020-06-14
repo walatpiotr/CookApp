@@ -87,4 +87,37 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return cursor;
     }
 
+    Cursor searchData(String text, boolean name, boolean cookware, boolean device){
+        String query = "";
+        if(name && !cookware && !device){
+        query = "SELECT * FROM " + TABLE_NAME + " WHERE " + COLUMN_NAME + " LIKE '%" + text + "%'";
+        }
+        if(!name && cookware && !device){
+            query = "SELECT * FROM " + TABLE_NAME + " WHERE " + COLUMN_COOKWARE_ID + " LIKE '%" + text + "%'";
+        }
+        if(!name && !cookware && device){
+            query = "SELECT * FROM " + TABLE_NAME + " WHERE " + COLUMN_DEVICE + " LIKE '%" + text + "%'";
+        }
+        if(name && cookware && !device){
+            query = "SELECT * FROM " + TABLE_NAME + " WHERE " + COLUMN_NAME + " LIKE '%" + text + "%' OR " + COLUMN_COOKWARE_ID + " LIKE '%" + text + "%'";
+        }
+        if(!name && cookware && device){
+            query = "SELECT * FROM " + TABLE_NAME + " WHERE " + COLUMN_DEVICE + " LIKE '%" + text + "%' OR " + COLUMN_COOKWARE_ID + " LIKE '%" + text + "%'";
+        }
+        if(name && !cookware && device){
+            query = "SELECT * FROM " + TABLE_NAME + " WHERE " + COLUMN_NAME + " LIKE '%" + text + "%' OR " + COLUMN_DEVICE + " LIKE '%" + text + "%'";
+        }
+        if(name && cookware && device){
+            query = "SELECT * FROM " + TABLE_NAME + " WHERE " + COLUMN_NAME + " LIKE '%" + text + "%' OR " + COLUMN_DEVICE + " LIKE '%" + text + "%' OR " + COLUMN_COOKWARE_ID + " LIKE '%" + text + "%'";
+        }
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        Cursor cursor = null;
+        if(db != null){
+            cursor = db.rawQuery(query, null);
+        }
+        return cursor;
+
+    }
+
 }
