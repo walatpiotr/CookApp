@@ -1,4 +1,4 @@
-package com.example.cookapp;
+package com.example.cookapp.mainfragments.alarmfragments;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -15,6 +15,8 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.example.cookapp.R;
 
 
 /**

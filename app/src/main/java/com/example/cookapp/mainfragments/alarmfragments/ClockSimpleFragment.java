@@ -1,4 +1,4 @@
-package com.example.cookapp;
+package com.example.cookapp.mainfragments.alarmfragments;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import android.widget.Chronometer;
 import android.widget.ImageButton;
 
+import com.example.cookapp.R;
 import com.example.cookapp.mainfragments.FormFragment;
 
 
