@@ -2,6 +2,7 @@ package com.example.cookapp;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
@@ -9,18 +10,18 @@ import androidx.annotation.Nullable;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
     private Context context;
-    public static final String DATABASE_NAME = "Cook.db";
-    public static final int DATABASE_VERSION =1;
+    private static final String DATABASE_NAME = "Cook.db";
+    private static final int DATABASE_VERSION =1;
 
-    public static final String TABLE_NAME ="formula";
-    public static final String COLUMN_ID = "_id";
-    public static final String COLUMN_NAME = "name";
-    public static final String COLUMN_TYPE = "type";
-    public static final String COLUMN_COOKWARE_ID = "cookware_id";
-    public static final String COLUMN_DEVICE = "device";
-    public static final String COLUMN_POWER = "power";
-    public static final String COLUMN_MINUTES = "minute";
-    public static final String COLUMN_RATING = "rating";
+    private static final String TABLE_NAME ="formula";
+    private static final String COLUMN_ID = "_id";
+    private static final String COLUMN_NAME = "name";
+    private static final String COLUMN_TYPE = "type";
+    private static final String COLUMN_COOKWARE_ID = "cookware_id";
+    private static final String COLUMN_DEVICE = "device";
+    private static final String COLUMN_POWER = "power";
+    private static final String COLUMN_MINUTES = "minute";
+    private static final String COLUMN_RATING = "rating";
 
 
     public DatabaseHelper(@Nullable Context context) {
@@ -31,7 +32,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         String query =
-                "CREATE TABLE " + TABLE_NAME + " (" + COLUMN_ID + "INTEGER PRIMARY KEY AUTOINCREMENT, "
+                "CREATE TABLE " + TABLE_NAME + " (" + COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
                 + COLUMN_NAME + " TEXT,"
                 + COLUMN_TYPE + " TEXT,"
                 + COLUMN_COOKWARE_ID + " INTEGER,"
@@ -58,6 +59,18 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         cv.put(COLUMN_POWER, "moc123");
         cv.put(COLUMN_MINUTES, 123);
         cv.put(COLUMN_RATING, 1410);
-        long result = db.insert(TABLE_NAME, null, cv);
+        db.insert(TABLE_NAME, null, cv);
     }
+
+    Cursor readAllData(){
+        String query = "SELECT * FROM " + TABLE_NAME;
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        Cursor cursor = null;
+        if(db != null){
+            cursor = db.rawQuery(query, null);
+        }
+        return cursor;
+    }
+
 }

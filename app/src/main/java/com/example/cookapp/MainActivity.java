@@ -1,5 +1,7 @@
 package com.example.cookapp;
 
+import android.database.Cursor;
+import android.database.DatabaseUtils;
 import android.os.Bundle;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -12,6 +14,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+
 
 import com.example.cookapp.ui.main.SectionsPagerAdapter;
 
@@ -29,6 +32,11 @@ public class MainActivity extends AppCompatActivity {
         viewPager.setAdapter(sectionsPagerAdapter);
         TabLayout tabs = findViewById(R.id.tabs);
         tabs.setupWithViewPager(viewPager);
+        DatabaseHelper myDB = new DatabaseHelper(MainActivity.this);
+        myDB.addFormula();
+        Cursor cursor = myDB.readAllData();
+        System.out.print(DatabaseUtils.dumpCursorToString(cursor));
+
 
 
         /*
