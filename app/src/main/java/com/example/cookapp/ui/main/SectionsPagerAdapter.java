@@ -10,6 +10,7 @@ import androidx.fragment.app.FragmentPagerAdapter;
 
 import com.example.cookapp.AlarmFragment;
 import com.example.cookapp.FormFragment;
+import com.example.cookapp.ListFragment;
 import com.example.cookapp.R;
 
 /**
@@ -35,7 +36,7 @@ public class SectionsPagerAdapter extends FragmentPagerAdapter {
                 fragment = new FormFragment();
                 break;
             case 1:
-                fragment = new FormFragment();
+                fragment = new ListFragment();
                 break;
             case 2:
                 fragment = new AlarmFragment();
