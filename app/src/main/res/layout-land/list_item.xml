@@ -20,13 +20,14 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            >
 
             <LinearLayout
                 android:layout_width="fill_parent"
-                android:layout_weight="2"
                 android:layout_height="match_parent"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:layout_weight="5">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -40,7 +41,7 @@
                         android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
                         android:gravity="center"
-                        android:lines="1"
+                        android:autoSizeTextType="none"
                         android:text="TextView"
                         android:textSize="12sp"
                         android:layout_weight="1"/>
@@ -50,7 +51,8 @@
                         android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
                         android:gravity="center"
-                        android:lines="1"
+
+                        android:autoSizeTextType="none"
                         android:layout_weight="1"
                         android:text="TextView"
                         android:textSize="12sp" />
@@ -60,9 +62,9 @@
                         android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:gravity="center"
-                        android:lines="1"
 
+                        android:autoSizeTextType="none"
+                        android:gravity="center"
                         android:text="TextView"
                         android:textSize="12sp" />
 
@@ -81,7 +83,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:gravity="center"
-                        android:lines="1"
+                        android:autoSizeTextType="none"
                         android:text="TextView"
                         android:textSize="12sp" />
 
@@ -91,8 +93,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:gravity="center"
-                        android:lines="1"
-
+                        android:autoSizeTextType="none"
                         android:text="TextView"
                         android:textSize="12sp" />
 
@@ -102,8 +103,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:gravity="center"
-                        android:lines="1"
-
+                        android:autoSizeTextType="none"
                         android:text="TextView"
                         android:textSize="12sp" />
 

@@ -17,10 +17,11 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RatingBar;
 
-import com.example.cookapp.database.DatabaseHelper;
 import com.example.cookapp.R;
+import com.example.cookapp.database.DatabaseHelper;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 
 /**
@@ -43,7 +44,7 @@ public class FormFragment extends Fragment {
     private EditText minutes;
     private RatingBar ratingBar;
 
-    public static final String ACTION_NEW_MSG = "pl.froger.hello.broadcastreceiver.NEW_MSG";
+    public static final String ACTION_NEW_MSG = "com.example.cookapp.mainfragments.NEW_MSG";
     public static final String MSG_FIELD = "message";
     private MyReceiver myReceiver;
 
@@ -77,7 +78,10 @@ public class FormFragment extends Fragment {
             String mParam1 = getArguments().getString(ARG_PARAM1);
             String mParam2 = getArguments().getString(ARG_PARAM2);
         }
+
         initReceiver();
+        System.out.println("powinien przyjmować");
+
         id = new ArrayList<>();
         name = new ArrayList<>();
         type = new ArrayList<>();
@@ -87,6 +91,7 @@ public class FormFragment extends Fragment {
         minutes_db = new ArrayList<>();
         rating = new ArrayList<>();
         storeDataInArrays();
+
     }
 
     private void storeDataInArrays() {
@@ -115,14 +120,16 @@ public class FormFragment extends Fragment {
         autoCookware = view.findViewById(R.id.autoCompleteTextView2);
         autoDevice = view.findViewById(R.id.autoCompleteTextView3);
         power = view.findViewById(R.id.editText_power);
-        minutes = view.findViewById(R.id.editText3);
+        minutes = view.findViewById(R.id.edit_minutes);
         ratingBar = view.findViewById(R.id.ratingBar);
         Button clear = view.findViewById(R.id.clear_button);
         Button submit = view.findViewById(R.id.submit_button);
 
+
+
         //changing color of hint text in two segments
-        power.setHintTextColor(getResources().getColor(R.color.colorPrimary));
-        minutes.setHintTextColor(getResources().getColor(R.color.colorPrimary));
+        //power.setHintTextColor(getResources().getColor(R.color.colorPrimary));
+        //minutes.setHintTextColor(getResources().getColor(R.color.colorPrimary));
 
         //reaction to clear button
         clear.setOnClickListener(new View.OnClickListener() {
@@ -155,9 +162,6 @@ public class FormFragment extends Fragment {
                 String power_string;
                 String minutes_string;
                 float rating_value;
-
-
-
                 if(
                         !autoName.getText().toString().equals("") &&
                         !autoCookware.getText().toString().equals("") &&
@@ -198,7 +202,6 @@ public class FormFragment extends Fragment {
                         ratingBar.setRating((float) 2.5);
                     }
                 }
-
                 else
                 {
                     if(autoName.getText().toString().equals("")){
@@ -227,30 +230,30 @@ public class FormFragment extends Fragment {
                         minutes.setHintTextColor(getResources().getColor(R.color.error_red));
                     }
                 }
-
-
-
             }
         });
 
         return view;
     }
-
-    private void initReceiver() {
+    public void initReceiver() {
         myReceiver = new MyReceiver();
         IntentFilter filter = new IntentFilter(ACTION_NEW_MSG);
-        getActivity().registerReceiver(myReceiver, filter);
+        Objects.requireNonNull(getActivity()).registerReceiver(myReceiver, filter);
     }
 
     private void finishReceiver() {
-        getActivity().unregisterReceiver(myReceiver);
+        Objects.requireNonNull(getActivity()).unregisterReceiver(myReceiver);
     }
+
     public class MyReceiver extends BroadcastReceiver {
         @Override
         public void onReceive(Context context, Intent intent) {
-            if (intent.getAction().equals(ACTION_NEW_MSG)) {
+
+            if (intent.getAction().equals(FormFragment.ACTION_NEW_MSG)) {
                 String message = intent.getStringExtra(MSG_FIELD);
+                System.out.print(message);
                 if(message!=null){
+                    //System.out.print("nie był null");
                     long value = Long.parseLong(message);
                     String beforeTime;
                     String afterTime;
@@ -273,7 +276,11 @@ public class FormFragment extends Fragment {
                         }
                     }
                     String current_time =  beforeTime + ":" + afterTime;
+
                     minutes.setText(current_time);
+
+                    System.out.println(minutes.getText());
+
                 }
             }
         }

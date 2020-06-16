@@ -1,9 +1,8 @@
-package com.example.cookapp.recyclerview;
+package com.example.cookapp;
 
 import android.database.Cursor;
 import android.os.Bundle;
 
-import com.example.cookapp.R;
 import com.example.cookapp.database.DatabaseHelper;
 import com.google.android.material.tabs.TabLayout;
 
@@ -25,6 +24,8 @@ public class MainActivity extends AppCompatActivity {
 
         SectionsPagerAdapter sectionsPagerAdapter = new SectionsPagerAdapter(this, getSupportFragmentManager());
         ViewPager viewPager = findViewById(R.id.view_pager);
+
+        viewPager.setOffscreenPageLimit(3);         /* limit is a fixed integer*/
         viewPager.setAdapter(sectionsPagerAdapter);
         TabLayout tabs = findViewById(R.id.tabs);
         tabs.setupWithViewPager(viewPager);

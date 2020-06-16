@@ -24,41 +24,51 @@
 
                 <EditText
                     android:id="@+id/search_text"
-                    android:layout_width="321dp"
+                    android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:ems="10"
+                    android:layout_weight="0.5"
                     android:gravity="center_horizontal|left|center_vertical"
                     android:hint="what are you searching for?"
                     android:inputType="textPersonName" />
 
                 <Button
                     android:id="@+id/search_button"
-                    android:layout_width="wrap_content"
+                    android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
-                    android:gravity="right|center_horizontal|center_vertical"
+                    android:layout_weight="2"
+                    android:gravity="center_horizontal|center_vertical"
                     android:text="SEARCH" />
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
+                >
 
                 <CheckBox
                     android:id="@+id/checkBoxName"
-                    android:layout_width="wrap_content"
+                    android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
+                    android:layout_weight="1"
+
                     android:text="Name" />
 
                 <CheckBox
                     android:id="@+id/checkBoxCookware"
-                    android:layout_width="wrap_content"
+                    android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
+                    android:layout_weight="1"
+
                     android:text="Cookware" />
 
                 <CheckBox
                     android:id="@+id/checkBoxDevice"
-                    android:layout_width="wrap_content"
+                    android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
+                    android:layout_weight="1"
+
                     android:text="Device" />
             </LinearLayout>
 

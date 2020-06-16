@@ -1,4 +1,4 @@
-package com.example.cookapp.mainfragments.alarmfragments;
+package com.example.cookapp;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -13,7 +13,6 @@ import android.view.ViewGroup;
 import android.widget.Chronometer;
 import android.widget.ImageButton;
 
-import com.example.cookapp.R;
 import com.example.cookapp.mainfragments.FormFragment;
 
 
@@ -99,10 +98,12 @@ public class ClockSimpleFragment extends Fragment {
 
                     chronometer.stop();
                     pauseOffset = SystemClock.elapsedRealtime() - chronometer.getBase();
-                    running = false;
-                    sendMessageToActivity(pauseOffset);
 
+                    sendMessageToActivity(pauseOffset);
+                    System.out.println("powinien wysłać");
+                    running = false;
                 }
+
 
 
             }// end onClick
