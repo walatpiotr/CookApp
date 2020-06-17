@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.TabHost;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -56,6 +57,7 @@ public class MyListAdapter extends RecyclerView.Adapter<MyListAdapter.ViewHolder
                 Context context = v.getContext();
                 sendMessageToActivity(context, minutesValue);
                 Toast.makeText(context, "Your desired time has been set in Dish Clock. Let's cook!", Toast.LENGTH_SHORT).show();
+
             }
         });
         /*holder.relativeLayout.setOnClickListener(new View.OnClickListener() {
@@ -71,6 +73,7 @@ public class MyListAdapter extends RecyclerView.Adapter<MyListAdapter.ViewHolder
         intent.putExtra(ClockAlarmFragment.MSG_FIELD1, message);
 
         context.sendBroadcast(intent);
+
     }
 
 
