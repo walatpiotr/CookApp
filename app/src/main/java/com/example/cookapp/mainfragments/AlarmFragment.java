@@ -1,8 +1,10 @@
 package com.example.cookapp.mainfragments;
 
+import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 
 import androidx.annotation.Nullable;
+import androidx.appcompat.widget.LinearLayoutCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
@@ -26,6 +28,7 @@ import com.google.android.material.tabs.TabLayout;
 public class AlarmFragment extends Fragment {
     public static TabLayout tabLayout;
     public static ViewPager viewPager;
+    public static ViewPager viewpager2;
     public static int int_items = 2;
 
     @Nullable
@@ -38,9 +41,11 @@ public class AlarmFragment extends Fragment {
         tabLayout = (TabLayout) v.findViewById(R.id.tabLayout);
         viewPager = (ViewPager) v.findViewById(R.id.viewpager);
 
+
         /**
          *Set an Apater for the View Pager
          */
+
         viewPager.setAdapter(new AlarmsPagerAdapter(getChildFragmentManager()));
 
         /**

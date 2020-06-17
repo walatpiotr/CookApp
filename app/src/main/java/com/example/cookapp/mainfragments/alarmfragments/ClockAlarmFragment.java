@@ -1,7 +1,11 @@
 package com.example.cookapp.mainfragments.alarmfragments;
 
 import android.app.AlertDialog;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -17,6 +21,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.cookapp.R;
+import com.example.cookapp.mainfragments.FormFragment;
 
 
 /**
@@ -35,6 +40,10 @@ public class ClockAlarmFragment extends Fragment {
     boolean running;
     AutoCompleteTextView time_text_getter;
     View view;
+
+    public static final String ACTION_NEW_MSG1 = "com.example.cookapp.mainfragments.alarmfragments.NEW_MSG";
+    public static final String MSG_FIELD1 = "message";
+    private ClockAlarmFragment.MyReceiver1 myReceiver;
 
     // TODO: Rename and change types of parameters
     private String mParam1;
@@ -69,6 +78,7 @@ public class ClockAlarmFragment extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+        initReceiver();
     }
 
     @Override
@@ -171,5 +181,29 @@ public class ClockAlarmFragment extends Fragment {
                 }
             });
             alert.create().show();
+    }
+
+    private void initReceiver() {
+        myReceiver = new MyReceiver1();
+        IntentFilter filter = new IntentFilter(ACTION_NEW_MSG1);
+        getActivity().registerReceiver(myReceiver, filter);
+    }
+
+    private void finishReceiver() {
+        getActivity().unregisterReceiver(myReceiver);
+    }
+    public class MyReceiver1 extends BroadcastReceiver {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+
+            if (intent.getAction().equals(ClockAlarmFragment.ACTION_NEW_MSG1)) {
+                String message = intent.getStringExtra(MSG_FIELD1);
+
+                if (message != null) {
+                    time_text_getter.setText(message);
+                    clock_text.setText(message);
+                }
+            }
+        }
     }
 }
