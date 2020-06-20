@@ -3,6 +3,8 @@ package com.example.cookapp.mainfragments;
 import android.database.Cursor;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
@@ -48,13 +50,12 @@ public class ListFragment extends Fragment {
     public CheckBox cookware_check;
     public CheckBox device_check;
     public Button search_button;
-
     public RecyclerView recyclerView;
 
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
-    private android.database.Cursor cursor;
+    //public android.database.Cursor cursor;
 
     public ListFragment() {
         // Required empty public constructor
@@ -116,7 +117,7 @@ public class ListFragment extends Fragment {
         device_check = view.findViewById(R.id.checkBoxDevice);
         search_button = view.findViewById(R.id.search_button);
 
-
+        name_check.setChecked(true);
 
 
         storeDataInArrays();
@@ -133,14 +134,17 @@ public class ListFragment extends Fragment {
         search_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                recyclerView.setAdapter(new MyListAdapter(searchDataBase(what_search.getText().toString(),name_check.isChecked(),cookware_check.isChecked(),device_check.isChecked())));
+                searchData();
             }
         });
 
         return view;
     }
 
+    private void searchData(){
+        recyclerView.setAdapter(new MyListAdapter(searchDataBase(what_search.getText().toString(),name_check.isChecked(),cookware_check.isChecked(),device_check.isChecked())));
+
+    }
     //ArrayList<MyListData> nowa = new ArrayList<MyListData()>;
 
     public MyListData[] dataToMyListData(){
@@ -175,7 +179,7 @@ public class ListFragment extends Fragment {
     MyListData[] searchDataBase(String searching_text, boolean name_check, boolean cookware_check, boolean device_check){
 
         DatabaseHelper db = new DatabaseHelper(getContext());
-        cursor = db.searchData(searching_text,name_check,cookware_check,device_check);
+        Cursor cursor = db.searchData(searching_text,name_check,cookware_check,device_check);
         id.clear();
         name.clear();
         type.clear();
@@ -184,6 +188,7 @@ public class ListFragment extends Fragment {
         power_db.clear();
         minutes_db.clear();
         rating.clear();
+
 
         while (cursor.moveToNext()){
             id.add(cursor.getString(0));
@@ -203,7 +208,34 @@ public class ListFragment extends Fragment {
         return result;
     }
 
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
 
+        outState.getString("searched_text", what_search.getText().toString());
+        outState.getBoolean("name_check", name_check.isChecked());
+        outState.getBoolean("cookware_check", cookware_check.isChecked());
+        outState.getBoolean("device_check", device_check.isChecked());
+    }
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+
+        if (savedInstanceState != null){
+            what_search.setText(savedInstanceState.getString("searched_text"));
+            boolean name = savedInstanceState.getBoolean("name_check");
+            name_check.setChecked(name);
+            boolean cookware = savedInstanceState.getBoolean("cookware_check");
+            cookware_check.setChecked(cookware);
+            boolean device = savedInstanceState.getBoolean("device_check");
+            device_check.setChecked(device);
+
+
+            //recyclerView.setAdapter(new MyListAdapter(searchDataBase(what_search.getText().toString(),name_check.isChecked(),cookware_check.isChecked(),device_check.isChecked())));
+        }
+
+    }
 
     class RecyclerViewPagerAdapter extends FragmentPagerAdapter {
 
