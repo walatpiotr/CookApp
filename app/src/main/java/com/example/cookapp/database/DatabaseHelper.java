@@ -110,6 +110,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         if(name && cookware && device){
             query = "SELECT * FROM " + TABLE_NAME + " WHERE " + COLUMN_NAME + " LIKE '%" + text + "%' OR " + COLUMN_DEVICE + " LIKE '%" + text + "%' OR " + COLUMN_COOKWARE_ID + " LIKE '%" + text + "%'";
         }
+        if(!name && !cookware && !device){
+            query = "SELECT * FROM " + TABLE_NAME + " WHERE " + COLUMN_NAME + " LIKE '%" + text + "%' OR " + COLUMN_DEVICE + " LIKE '%" + text + "%' OR " + COLUMN_COOKWARE_ID + " LIKE '%" + text + "%'";
+        }
+        if(text.isEmpty()){
+            query = "SELECT * FROM " + TABLE_NAME;
+        }
         SQLiteDatabase db = this.getReadableDatabase();
 
         Cursor cursor = null;
