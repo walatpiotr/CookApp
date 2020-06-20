@@ -1,7 +1,6 @@
 package com.example.cookapp.ui.main;
 
 import android.content.Context;
-import android.content.res.Configuration;
 
 import androidx.annotation.Nullable;
 import androidx.annotation.StringRes;
@@ -10,7 +9,6 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 
 import com.example.cookapp.mainfragments.AlarmFragment;
-import com.example.cookapp.mainfragments.AlarmLandscapeFragment;
 import com.example.cookapp.mainfragments.FormFragment;
 import com.example.cookapp.mainfragments.ListFragment;
 import com.example.cookapp.R;
@@ -32,8 +30,6 @@ public class SectionsPagerAdapter extends FragmentPagerAdapter {
 
     @Override
     public Fragment getItem(int position) {
-
-            // In portrait
 
             Fragment fragment = null;
             switch (position) {
@@ -61,7 +57,6 @@ public class SectionsPagerAdapter extends FragmentPagerAdapter {
 
     @Override
     public int getCount() {
-        // Show 3 total pages.
         return 3;
     }
 }

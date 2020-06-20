@@ -20,7 +20,6 @@ import com.example.cookapp.mainfragments.alarmfragments.ClockAlarmFragment;
 public class MyListAdapter extends RecyclerView.Adapter<MyListAdapter.ViewHolder>{
     private MyListData[] listdata;
 
-    // RecyclerView recyclerView;
     public MyListAdapter(MyListData[] listdata) {
         this.listdata = listdata;
     }
@@ -60,12 +59,7 @@ public class MyListAdapter extends RecyclerView.Adapter<MyListAdapter.ViewHolder
 
             }
         });
-        /*holder.relativeLayout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Toast.makeText(view.getContext(),"click on item: "+myListData.getDescription(),Toast.LENGTH_LONG).show();
-            }
-        });*/
+
     }
 
     private void sendMessageToActivity(Context context, String message) {
@@ -92,8 +86,6 @@ public class MyListAdapter extends RecyclerView.Adapter<MyListAdapter.ViewHolder
         public TextView rating;
         public Button startCooking;
 
-
-        //public RelativeLayout relativeLayout;
         public ViewHolder(View itemView) {
             super(itemView);
             this.name = (TextView) itemView.findViewById(R.id.name);
@@ -103,7 +95,7 @@ public class MyListAdapter extends RecyclerView.Adapter<MyListAdapter.ViewHolder
             this.minutes = (TextView) itemView.findViewById(R.id.minutes);
             this.rating = (TextView) itemView.findViewById(R.id.rating);
             this.startCooking = itemView.findViewById(R.id.try_list_button);
-            //relativeLayout = (RelativeLayout)itemView.findViewById(R.id.relativeLayout);
+
         }
     }
 }

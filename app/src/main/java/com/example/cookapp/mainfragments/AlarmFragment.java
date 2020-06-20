@@ -1,10 +1,8 @@
 package com.example.cookapp.mainfragments;
 
-import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 
 import androidx.annotation.Nullable;
-import androidx.appcompat.widget.LinearLayoutCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
@@ -14,7 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.cookapp.ClockSimpleFragment;
+import com.example.cookapp.mainfragments.alarmfragments.ClockSimpleFragment;
 import com.example.cookapp.mainfragments.alarmfragments.ClockAlarmFragment;
 import com.example.cookapp.R;
 import com.google.android.material.tabs.TabLayout;
@@ -28,31 +26,18 @@ import com.google.android.material.tabs.TabLayout;
 public class AlarmFragment extends Fragment {
     public static TabLayout tabLayout;
     public static ViewPager viewPager;
-    public static ViewPager viewpager2;
+
     public static int int_items = 2;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        /**
-         *Inflate tab_layout and setup Views.
-         */
+
         View v = inflater.inflate(R.layout.fragment_alarm, container, false);
-        tabLayout = (TabLayout) v.findViewById(R.id.tabLayout);
-        viewPager = (ViewPager) v.findViewById(R.id.viewpager);
-
-
-        /**
-         *Set an Apater for the View Pager
-         */
+        tabLayout = v.findViewById(R.id.tabLayout);
+        viewPager = v.findViewById(R.id.viewpager);
 
         viewPager.setAdapter(new AlarmsPagerAdapter(getChildFragmentManager()));
-
-        /**
-         * Now , this is a workaround ,
-         * The setupWithViewPager dose't works without the runnable .
-         * Maybe a Support Library Bug .
-         */
 
         tabLayout.post(new Runnable() {
             @Override
@@ -62,7 +47,6 @@ public class AlarmFragment extends Fragment {
         });
 
         return v;
-
     }
 
     class AlarmsPagerAdapter extends FragmentPagerAdapter {
@@ -97,12 +81,7 @@ public class AlarmFragment extends Fragment {
         public int getCount() {
 
             return int_items;
-
         }
-
-        /**
-         * This method returns the title of the tab according to the position.
-         */
 
         @Override
         public CharSequence getPageTitle(int position) {
