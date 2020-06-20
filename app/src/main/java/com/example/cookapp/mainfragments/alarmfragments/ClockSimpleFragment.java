@@ -1,4 +1,4 @@
-package com.example.cookapp;
+package com.example.cookapp.mainfragments.alarmfragments;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import android.widget.Chronometer;
 import android.widget.ImageButton;
 
+import com.example.cookapp.R;
 import com.example.cookapp.mainfragments.FormFragment;
 
 
@@ -71,7 +72,6 @@ public class ClockSimpleFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_clock_simple, container, false);
         ImageButton start = (ImageButton) view.findViewById(R.id.start_button);
         final ImageButton pause = (ImageButton) view.findViewById(R.id.pause_button);
@@ -98,13 +98,12 @@ public class ClockSimpleFragment extends Fragment {
         reset.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //to test
                 resetTimer();
-            }// end onClick
+            }
         });
 
         if(savedInstanceState==null){
-            //timer.cancel();
+
             running= false;
         }
         if(savedInstanceState!=null) {
@@ -133,16 +132,13 @@ public class ClockSimpleFragment extends Fragment {
             chronometer.setBase(SystemClock.elapsedRealtime() - pauseOffset);
             chronometer.start();
             running = true;
-
     }
 
     private void pauseTimer(){
 
             chronometer.stop();
             pauseOffset = SystemClock.elapsedRealtime() - chronometer.getBase();
-
             sendMessageToActivity(pauseOffset);
-            System.out.println("powinien wysłać");
             running = false;
     }
 
@@ -150,7 +146,6 @@ public class ClockSimpleFragment extends Fragment {
         chronometer.stop();
         pauseOffset = SystemClock.elapsedRealtime() - chronometer.getBase();
         running = false;
-        //
         chronometer.setBase(SystemClock.elapsedRealtime());
         pauseOffset = 0;
     }
@@ -158,7 +153,7 @@ public class ClockSimpleFragment extends Fragment {
     @Override
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-        //pauseOffset = SystemClock.elapsedRealtime() - chronometer.getBase();
+
 
         outState.putString("clock_value", chronometer.getText().toString());
         outState.putBoolean("isRunning", running);
