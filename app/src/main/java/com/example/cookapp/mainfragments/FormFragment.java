@@ -81,7 +81,6 @@ public class FormFragment extends Fragment {
         }
 
         initReceiver();
-        System.out.println("powinien przyjmować");
 
         id = new ArrayList<>();
         name = new ArrayList<>();
@@ -119,7 +118,6 @@ public class FormFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_form, container, false);
         autoName = view.findViewById(R.id.autoCompleteTextView);
         autoCookware = view.findViewById(R.id.autoCompleteTextView2);
@@ -145,16 +143,8 @@ public class FormFragment extends Fragment {
             power.setText(savedInstanceState.getString("power_key"));
             minutes.setText(savedInstanceState.getString("minutes_key"));
             ratingBar.setRating(savedInstanceState.getFloat("rating_key"));
-
         }
 
-
-
-        //changing color of hint text in two segments
-        //power.setHintTextColor(getResources().getColor(R.color.colorPrimary));
-        //minutes.setHintTextColor(getResources().getColor(R.color.colorPrimary));
-
-        //reaction to clear button
         clear.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -175,7 +165,6 @@ public class FormFragment extends Fragment {
             }// end onClick
         });
 
-        //reaction to submit button
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view){
@@ -204,8 +193,6 @@ public class FormFragment extends Fragment {
                         power_string = power.getText().toString();
                         minutes_string = minutes.getText().toString();
                         rating_value = ratingBar.getRating();
-
-                        //database adding values !!!
 
                         DatabaseHelper db = new DatabaseHelper(getContext());
                         db.addRecord(name_string, cookware_string, device_string, power_string, minutes_string, rating_value);
@@ -274,9 +261,7 @@ public class FormFragment extends Fragment {
 
             if (intent.getAction().equals(FormFragment.ACTION_NEW_MSG)) {
                 String message = intent.getStringExtra(MSG_FIELD);
-                System.out.print(message);
                 if(message!=null){
-                    //System.out.print("nie był null");
                     long value = Long.parseLong(message);
                     String beforeTime;
                     String afterTime;
@@ -299,16 +284,10 @@ public class FormFragment extends Fragment {
                         }
                     }
                     String current_time =  beforeTime + ":" + afterTime;
-
                     minutes.setText(current_time);
-
-                    System.out.println(minutes.getText());
-
                 }
             }
         }
-
-
     }
 
     @Override

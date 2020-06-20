@@ -77,7 +77,6 @@ public class RecyclerViewFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.recyclerview, container, false);
 
 
@@ -95,8 +94,6 @@ public class RecyclerViewFragment extends Fragment {
         return view;
     }
 
-    //ArrayList<MyListData> nowa = new ArrayList<MyListData()>;
-
     public MyListData[] dataToMyListData(){
         MyListData[] result = new MyListData[id.size()];
 
@@ -109,7 +106,6 @@ public class RecyclerViewFragment extends Fragment {
     }
 
     private void storeDataInArrays() {
-
 
         DatabaseHelper myDB = new DatabaseHelper(getContext());
         Cursor cursor = myDB.readAllData();

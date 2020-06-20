@@ -86,17 +86,12 @@ public class ClockAlarmFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        view = inflater.inflate(R.layout.fragment_clock_alarm, container, false);
 
+        view = inflater.inflate(R.layout.fragment_clock_alarm, container, false);
         time_text_getter = (AutoCompleteTextView) view.findViewById(R.id.autoCompleteTextView4);
         Button submit_time_button = (Button) view.findViewById(R.id.submit_time_button);
-
         clock_text = (TextView) view.findViewById(R.id.clock);
-
         reset_time_button = (ImageButton) view.findViewById(R.id.stop_button);
-
-
 
         if(clock_text.getText().toString().equals("00:00")){
             showAlertDialog(view);
@@ -113,12 +108,11 @@ public class ClockAlarmFragment extends Fragment {
                     }
                     else {
                         String not_formatted_time = time_text_getter.getText().toString();
-                        //time_text_getter.setHint("--:--");
+
                         mili = (Long.parseLong(not_formatted_time.substring(0, 2)) * 60 + Long.parseLong(not_formatted_time.substring(3, 5))) * 1000;
                         startTimer(mili);
                         running=true;
                     }
-
                 }
             }
         });
@@ -150,22 +144,12 @@ public class ClockAlarmFragment extends Fragment {
             @Override
             public void onFinish() {
                 running = false;
-                //clock_text.setText("--:--");
-                //time_text_getter.setText("");
-                //time_text_getter.setHint("--:--");
+
             }
 
         }.start();
     }
 
-    private void pauseTimer(){
-        timer.cancel();
-        running = false;
-    }
-
-    private void resetTimer(){
-
-    }
 
     private void updateCountDownTimer(Long value){
         mili = value;
@@ -229,8 +213,6 @@ public class ClockAlarmFragment extends Fragment {
                     clock_text.setText(message);
                 }
             }
-
-
         }
     }
 
@@ -241,7 +223,6 @@ public class ClockAlarmFragment extends Fragment {
         outState.putString("clock_value", clock_text.getText().toString());
         outState.putBoolean("isRunning", running);
         outState.putLong("milis",mili);
-        //outState.putBundle("timer", timer);
 
     }
 
