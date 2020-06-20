@@ -2,6 +2,7 @@ package com.example.cookapp;
 
 import android.database.Cursor;
 import android.os.Bundle;
+import android.view.WindowManager;
 
 import com.example.cookapp.database.DatabaseHelper;
 import com.google.android.material.tabs.TabLayout;
@@ -20,6 +21,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
         setContentView(R.layout.activity_main);
 
         SectionsPagerAdapter sectionsPagerAdapter = new SectionsPagerAdapter(this, getSupportFragmentManager());

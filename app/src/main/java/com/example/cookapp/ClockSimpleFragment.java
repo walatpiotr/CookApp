@@ -29,7 +29,7 @@ public class ClockSimpleFragment extends Fragment {
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
     private Chronometer chronometer;
-    private boolean running;
+    private boolean running=false;
     private long pauseOffset;
     // TODO: Rename and change types of parameters
     private String mParam1;
@@ -77,49 +77,48 @@ public class ClockSimpleFragment extends Fragment {
         final ImageButton pause = (ImageButton) view.findViewById(R.id.pause_button);
         ImageButton reset = (ImageButton) view.findViewById(R.id.stop_button);
         chronometer = view.findViewById(R.id.chronometer);
+
+
         start.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-                if(!running){
-                    chronometer.setBase(SystemClock.elapsedRealtime() - pauseOffset);
-                    chronometer.start();
-                    running = true;
+                if(!running) {
+                    startTimer();
                 }
-
-
             }// end onClick
         });
         pause.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-                if(running){
-
-                    chronometer.stop();
-                    pauseOffset = SystemClock.elapsedRealtime() - chronometer.getBase();
-
-                    sendMessageToActivity(pauseOffset);
-                    System.out.println("powinien wysłać");
-                    running = false;
+                if(running) {
+                    pauseTimer();
                 }
-
-
-
             }// end onClick
         });
         reset.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 //to test
-                chronometer.stop();
-                pauseOffset = SystemClock.elapsedRealtime() - chronometer.getBase();
-                running = false;
-                //
-                chronometer.setBase(SystemClock.elapsedRealtime());
-                pauseOffset = 0;
+                resetTimer();
             }// end onClick
         });
+
+        if(savedInstanceState==null){
+            //timer.cancel();
+            running= false;
+        }
+        if(savedInstanceState!=null) {
+            running = savedInstanceState.getBoolean("isRunning");
+            pauseOffset = savedInstanceState.getLong("offset");
+            chronometer.setBase(SystemClock.elapsedRealtime() - pauseOffset);
+            if(running){
+                startTimer();
+            }
+            else{
+                pauseTimer();
+            }
+        }
+
         return view;
     }
 
@@ -129,4 +128,41 @@ public class ClockSimpleFragment extends Fragment {
         getActivity().sendBroadcast(intent);
     }
 
+    private void startTimer(){
+
+            chronometer.setBase(SystemClock.elapsedRealtime() - pauseOffset);
+            chronometer.start();
+            running = true;
+
+    }
+
+    private void pauseTimer(){
+
+            chronometer.stop();
+            pauseOffset = SystemClock.elapsedRealtime() - chronometer.getBase();
+
+            sendMessageToActivity(pauseOffset);
+            System.out.println("powinien wysłać");
+            running = false;
+    }
+
+    private void resetTimer(){
+        chronometer.stop();
+        pauseOffset = SystemClock.elapsedRealtime() - chronometer.getBase();
+        running = false;
+        //
+        chronometer.setBase(SystemClock.elapsedRealtime());
+        pauseOffset = 0;
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        //pauseOffset = SystemClock.elapsedRealtime() - chronometer.getBase();
+
+        outState.putString("clock_value", chronometer.getText().toString());
+        outState.putBoolean("isRunning", running);
+        outState.putLong("offset", pauseOffset);
+
+    }
 }

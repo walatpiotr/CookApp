@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
 
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import android.os.CountDownTimer;
@@ -37,9 +38,10 @@ public class ClockAlarmFragment extends Fragment {
     public TextView clock_text;
     public CountDownTimer timer;
     public ImageButton reset_time_button;
-    boolean running;
+    private boolean running = false;
     AutoCompleteTextView time_text_getter;
     View view;
+    private long mili;
 
     public static final String ACTION_NEW_MSG1 = "com.example.cookapp.mainfragments.alarmfragments.NEW_MSG";
     public static final String MSG_FIELD1 = "message";
@@ -94,10 +96,14 @@ public class ClockAlarmFragment extends Fragment {
 
         reset_time_button = (ImageButton) view.findViewById(R.id.stop_button);
 
+
+
+        if(clock_text.getText().toString().equals("00:00")){
+            showAlertDialog(view);
+        }
         submit_time_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 if(time_text_getter.getText().toString().matches("\\d{2}:\\d{2}") && !running) {
                     String pattern = time_text_getter.getText().toString();
                     if(Integer.parseInt(pattern.substring(3))>59){
@@ -107,60 +113,24 @@ public class ClockAlarmFragment extends Fragment {
                     }
                     else {
                         String not_formatted_time = time_text_getter.getText().toString();
-                        time_text_getter.setHint("");
-                        final long mili = (Long.parseLong(not_formatted_time.substring(0, 2)) * 60 + Long.parseLong(not_formatted_time.substring(3, 5))) * 1000;
-                        timer = new CountDownTimer(mili, 1000) {
-                            @Override
-                            public void onTick(long value) {
-                                //String current_time = Long.toString(millisUntilFinished / 60000) + ":" + Long.toString((millisUntilFinished - ((millisUntilFinished / 60000) * 60000)) / 1000);
-                                //String dupa = Long.toString(mili);
-
-                                String beforetime;
-                                String aftertime;
-                                if(value/60000 < 10){
-                                    beforetime =  "0"+Long.toString(value / 60000);
-                                    if( ((value-((value / 60000)*60000)) / 1000)<10){
-                                        aftertime = "0"+ Long.toString((value-((value / 60000)*60000)) / 1000);
-                                    }
-                                    else{
-                                        aftertime = Long.toString((value-((value / 60000)*60000)) / 1000);
-                                    }
-                                }
-                                else{
-                                    beforetime =  Long.toString(value / 60000);
-                                    if( ((value-((value / 60000)*60000)) / 1000)<10){
-                                        aftertime = "0"+ Long.toString((value-((value / 60000)*60000)) / 1000);
-                                    }
-                                    else{
-                                        aftertime = Long.toString((value-((value / 60000)*60000)) / 1000);
-                                    }
-                                }
-                                String current_time =  beforetime + ":" + aftertime;
-                                clock_text.setText(current_time);
-                                running = true;
-                                time_text_getter.setText("");
-                            }
-
-                            @Override
-                            public void onFinish() {
-                                showAlertDialog(view);
-                                running = false;
-                                clock_text.setText("00:00");
-                                time_text_getter.setText("");
-                                time_text_getter.setHint("");
-                            }
-
-                        }.start();
+                        //time_text_getter.setHint("--:--");
+                        mili = (Long.parseLong(not_formatted_time.substring(0, 2)) * 60 + Long.parseLong(not_formatted_time.substring(3, 5))) * 1000;
+                        startTimer(mili);
+                        running=true;
                     }
 
                 }
             }
         });
+
+
+
+
         reset_time_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 timer.cancel();
-                clock_text.setText("00:00");
+                clock_text.setText("--:--");
                 time_text_getter.setText("");
                 running = false;
             }
@@ -168,6 +138,60 @@ public class ClockAlarmFragment extends Fragment {
 
 
         return view;
+    }
+
+    private void startTimer(Long value){
+        timer = new CountDownTimer(value, 1000) {
+            @Override
+            public void onTick(long value) {
+                updateCountDownTimer(value);
+            }
+
+            @Override
+            public void onFinish() {
+                running = false;
+                //clock_text.setText("--:--");
+                //time_text_getter.setText("");
+                //time_text_getter.setHint("--:--");
+            }
+
+        }.start();
+    }
+
+    private void pauseTimer(){
+        timer.cancel();
+        running = false;
+    }
+
+    private void resetTimer(){
+
+    }
+
+    private void updateCountDownTimer(Long value){
+        mili = value;
+        String beforetime;
+        String aftertime;
+        if(value/60000 < 10){
+            beforetime =  "0"+Long.toString(value / 60000);
+            if( ((value-((value / 60000)*60000)) / 1000)<10){
+                aftertime = "0"+ Long.toString((value-((value / 60000)*60000)) / 1000);
+            }
+            else{
+                aftertime = Long.toString((value-((value / 60000)*60000)) / 1000);
+            }
+        }
+        else{
+            beforetime =  Long.toString(value / 60000);
+            if( ((value-((value / 60000)*60000)) / 1000)<10){
+                aftertime = "0"+ Long.toString((value-((value / 60000)*60000)) / 1000);
+            }
+            else{
+                aftertime = Long.toString((value-((value / 60000)*60000)) / 1000);
+            }
+        }
+        String current_time =  beforetime + ":" + aftertime;
+        clock_text.setText(current_time);
+
     }
 
     public void showAlertDialog(View view){
@@ -192,6 +216,7 @@ public class ClockAlarmFragment extends Fragment {
     private void finishReceiver() {
         getActivity().unregisterReceiver(myReceiver);
     }
+
     public class MyReceiver1 extends BroadcastReceiver {
         @Override
         public void onReceive(Context context, Intent intent) {
@@ -203,6 +228,41 @@ public class ClockAlarmFragment extends Fragment {
                     time_text_getter.setText(message);
                     clock_text.setText(message);
                 }
+            }
+
+
+        }
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+
+        outState.putString("clock_value", clock_text.getText().toString());
+        outState.putBoolean("isRunning", running);
+        outState.putLong("milis",mili);
+        //outState.putBundle("timer", timer);
+
+    }
+
+    @Override
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        super.onViewStateRestored(savedInstanceState);
+
+        if(savedInstanceState!=null) {
+            if(!savedInstanceState.getString("clock_value").equals("--:--")) {
+                running = savedInstanceState.getBoolean("isRunning");
+                mili = savedInstanceState.getLong("milis");
+
+                updateCountDownTimer(mili);
+                if (running) {
+                    startTimer(mili);
+                }
+            }
+            else {
+                clock_text.setText("--:--");
+                running = false;
             }
         }
     }

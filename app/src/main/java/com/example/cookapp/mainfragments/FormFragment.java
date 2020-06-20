@@ -7,6 +7,7 @@ import android.content.IntentFilter;
 import android.database.Cursor;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
@@ -92,6 +93,10 @@ public class FormFragment extends Fragment {
         rating = new ArrayList<>();
         storeDataInArrays();
 
+
+
+
+
     }
 
     private void storeDataInArrays() {
@@ -124,6 +129,24 @@ public class FormFragment extends Fragment {
         ratingBar = view.findViewById(R.id.ratingBar);
         Button clear = view.findViewById(R.id.clear_button);
         Button submit = view.findViewById(R.id.submit_button);
+
+        if(savedInstanceState==null){
+            autoName.setText("");
+            autoCookware.setText("");
+            autoDevice.setText("");
+            power.setText("");
+            minutes.setText("");
+            ratingBar.setRating((float)2.5);
+        }
+        if(savedInstanceState!=null){
+            autoName.setText(savedInstanceState.getString("name_key"));
+            autoCookware.setText(savedInstanceState.getString("cookware_key"));
+            autoDevice.setText(savedInstanceState.getString("device_key"));
+            power.setText(savedInstanceState.getString("power_key"));
+            minutes.setText(savedInstanceState.getString("minutes_key"));
+            ratingBar.setRating(savedInstanceState.getFloat("rating_key"));
+
+        }
 
 
 
@@ -238,11 +261,11 @@ public class FormFragment extends Fragment {
     public void initReceiver() {
         myReceiver = new MyReceiver();
         IntentFilter filter = new IntentFilter(ACTION_NEW_MSG);
-        Objects.requireNonNull(getActivity()).registerReceiver(myReceiver, filter);
+        getActivity().registerReceiver(myReceiver, filter);
     }
 
     private void finishReceiver() {
-        Objects.requireNonNull(getActivity()).unregisterReceiver(myReceiver);
+        getActivity().unregisterReceiver(myReceiver);
     }
 
     public class MyReceiver extends BroadcastReceiver {
@@ -286,5 +309,17 @@ public class FormFragment extends Fragment {
         }
 
 
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+
+        outState.putString("name_key", autoName.getText().toString());
+        outState.putString("cookware_key", autoCookware.getText().toString());
+        outState.putString("device_key", autoDevice.getText().toString());
+        outState.putString("power_key", power.getText().toString());
+        outState.putString("minutes_key", minutes.getText().toString());
+        outState.putFloat("rating_key", ratingBar.getRating());
     }
 }

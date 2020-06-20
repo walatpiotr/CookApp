@@ -58,13 +58,13 @@
                 android:id="@+id/clock"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
+                android:layout_weight="1"
                 android:autoSizeMaxTextSize="100sp"
                 android:autoSizeMinTextSize="26sp"
                 android:autoSizeStepGranularity="2sp"
                 android:autoSizeTextType="uniform"
                 android:gravity="top|center"
-                android:text="00:00"
-                android:layout_weight="1"/>
+                android:text="--:--" />
 
             <ImageButton
                 android:id="@+id/stop_button"
