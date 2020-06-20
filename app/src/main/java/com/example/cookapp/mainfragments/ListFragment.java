@@ -120,24 +120,23 @@ public class ListFragment extends Fragment {
         name_check.setChecked(true);
 
 
-        storeDataInArrays();
-
-        MyListData[] argumentToMyListData = dataToMyListData();
-        MyListData[] myListData = argumentToMyListData;
-
+        //storeDataInArrays();
         recyclerView = (RecyclerView) view.findViewById(R.id.recyclerView);
+
+        MyListData[] myListData = dataToMyListData();
+
         MyListAdapter adapter = new MyListAdapter(myListData);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setAdapter(adapter);
-
+        //searchData();
         search_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 searchData();
             }
         });
-
+        //search_button.performClick();
         return view;
     }
 
@@ -212,28 +211,45 @@ public class ListFragment extends Fragment {
     public void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
 
-        outState.getString("searched_text", what_search.getText().toString());
-        outState.getBoolean("name_check", name_check.isChecked());
-        outState.getBoolean("cookware_check", cookware_check.isChecked());
-        outState.getBoolean("device_check", device_check.isChecked());
+        outState.putString("searched_text", what_search.getText().toString());
+        System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!"+what_search.getText().toString()+"!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+        outState.putBoolean("name_check", name_check.isChecked());
+        outState.putBoolean("cookware_check", cookware_check.isChecked());
+        outState.putBoolean("device_check", device_check.isChecked());
     }
 
     @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
+    public void onViewStateRestored(@Nullable Bundle savedInstanceState) {
+        super.onViewStateRestored(savedInstanceState);
 
-        if (savedInstanceState != null){
-            what_search.setText(savedInstanceState.getString("searched_text"));
+            //storeDataInArrays();
+        if(savedInstanceState!=null) {
+            String nameString = savedInstanceState.getString("searched_text");
+            System.out.println("Dostał 1:" + savedInstanceState.getString("searched_text"));
+            what_search.setText(nameString);
+            System.out.println(what_search.getText().toString() + "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+
             boolean name = savedInstanceState.getBoolean("name_check");
+            System.out.println("Dostał 2:" + savedInstanceState.getString("name_check"));
             name_check.setChecked(name);
+            System.out.println("Name: " + name_check.isChecked());
+
             boolean cookware = savedInstanceState.getBoolean("cookware_check");
+            System.out.println("Dostał 3:" + savedInstanceState.getString("cookware_check"));
             cookware_check.setChecked(cookware);
+            System.out.println("Cookware: " + cookware_check.isChecked());
+
             boolean device = savedInstanceState.getBoolean("device_check");
+            System.out.println("Dostał 4:" + savedInstanceState.getString("searched_text"));
             device_check.setChecked(device);
+            System.out.println("Device: " + device_check.isChecked());
 
-
+            searchData();
+            //storeDataInArrays();
             //recyclerView.setAdapter(new MyListAdapter(searchDataBase(what_search.getText().toString(),name_check.isChecked(),cookware_check.isChecked(),device_check.isChecked())));
+            search_button.performClick();
         }
+
 
     }
 
