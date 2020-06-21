@@ -1,9 +1,11 @@
 package com.example.cookapp;
 
+import android.content.Context;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.view.WindowManager;
 
+import com.example.cookapp.database.DatabaseChecker;
 import com.example.cookapp.database.DatabaseHelper;
 import com.google.android.material.tabs.TabLayout;
 
@@ -16,6 +18,7 @@ import com.example.cookapp.ui.main.SectionsPagerAdapter;
 public class MainActivity extends AppCompatActivity {
 
     private SectionsPagerAdapter mSectionsPagerAdapter;
+
 
 
     @Override
@@ -31,5 +34,7 @@ public class MainActivity extends AppCompatActivity {
         viewPager.setAdapter(mSectionsPagerAdapter);
         TabLayout tabs = findViewById(R.id.tabs);
         tabs.setupWithViewPager(viewPager);
+        new DatabaseChecker();
+
     }
 }
