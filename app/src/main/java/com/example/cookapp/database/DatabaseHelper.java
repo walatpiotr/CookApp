@@ -11,8 +11,7 @@ import androidx.annotation.Nullable;
 public class DatabaseHelper extends SQLiteOpenHelper {
     private Context context;
     private static final String DATABASE_NAME = "Cook.db";
-    private static final int DATABASE_VERSION =3;
-
+    public static int DATABASE_VERSION =3;
     private static final String TABLE_NAME ="formula";
     private static final String COLUMN_ID = "_id";
     private static final String COLUMN_NAME = "name";
@@ -50,6 +49,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_NAME);
         onCreate(db);
 
+    }
+    public void asyncUpdate(){
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_NAME);
+        onCreate(db);
     }
     void addFormula(){
         SQLiteDatabase db = this.getWritableDatabase();
