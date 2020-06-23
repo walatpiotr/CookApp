@@ -40,7 +40,7 @@ public class ClockAlarmFragment extends Fragment {
     public ImageButton reset_time_button;
     private boolean running = false;
     AutoCompleteTextView time_text_getter;
-    View view;
+    private View view;
     private long mili;
 
     public static final String ACTION_NEW_MSG1 = "com.example.cookapp.mainfragments.alarmfragments.NEW_MSG";
@@ -94,7 +94,7 @@ public class ClockAlarmFragment extends Fragment {
         reset_time_button = (ImageButton) view.findViewById(R.id.stop_button);
 
         if(clock_text.getText().toString().equals("00:00")){
-            showAlertDialog(view);
+            showAlertDialog();
         }
         submit_time_button.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -143,6 +143,7 @@ public class ClockAlarmFragment extends Fragment {
 
             @Override
             public void onFinish() {
+                showAlertDialog();
                 running = false;
 
             }
@@ -178,14 +179,16 @@ public class ClockAlarmFragment extends Fragment {
 
     }
 
-    public void showAlertDialog(View view){
+    public void showAlertDialog(){
+        //super.getContext();
+
         AlertDialog.Builder alert = new AlertDialog.Builder(getContext());
-            alert.setTitle("Your dish is finished");
-            alert.setMessage("Your dish is finished");
-            alert.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+        alert.setTitle("Your dish is finished");
+        alert.setMessage("Stop cooking!");
+        alert.setPositiveButton("OK", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
-                  Toast.makeText(getContext(), "Bon appetit!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), "Bon appetit!", Toast.LENGTH_SHORT).show();
                 }
             });
             alert.create().show();
@@ -224,12 +227,16 @@ public class ClockAlarmFragment extends Fragment {
         outState.putBoolean("isRunning", running);
         outState.putLong("milis",mili);
 
+
+
+
     }
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         super.onViewStateRestored(savedInstanceState);
+
 
         if(savedInstanceState!=null) {
             if(!savedInstanceState.getString("clock_value").equals("--:--")) {
